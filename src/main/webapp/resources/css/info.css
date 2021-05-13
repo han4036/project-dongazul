@@ -1,0 +1,175 @@
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+@media screen and (min-width:300px) and (max-width: 800px)
+and (min-height: 200px) {
+
+    body {
+        background-color: #ebebeb;
+        height: 100%;
+        width: 100%;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+ 
+
+    .navbar {
+        display: flex;
+        width: 100%;
+        justify-content: space-around;
+        padding: 10px 0;
+        height: 6vh;
+        margin: 1vh 0;
+
+        background-color: #ebebeb;
+    }
+
+    .navbar a {
+        font-size: 4vh;
+        color: #dadfe6;
+        text-decoration: none;
+    }
+
+    .navbar a:nth-child(3) {
+        color: #fe466d;
+    }
+
+    .profile-main {
+        height: calc(95vh - 22vh) ; 
+        width: 100%;
+
+        display: flex;
+        background-color: #efe1e1;
+        border-radius: 30%;
+
+        flex-direction: column;
+        align-items: center;
+        z-index: 5;
+    }
+    .photo-name{
+        display: flex;
+        width: 70vw;
+        height: 70vh;
+
+
+        margin-bottom: 1vh;
+
+        align-items: center;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+
+
+    }
+
+    .photo-pro {
+        width: 70vw;
+        height: 57vh;
+
+        border-radius: 50%;
+
+        background-color: rgba(29, 15, 221, 0.5);
+        
+
+
+        z-index: 99;
+    }
+
+    .photo-pro img {
+        width: 70vw;
+        height: 57vh;
+
+        align-items: center;
+
+        border-radius: 50%;
+        z-index: 1000;
+    }
+
+    .values {
+        /* display: flex; */
+
+        height: 5vh;
+        overflow: hidden;
+        margin: 0 auto;
+    }
+
+    .photo-name h3 {
+        margin: 0 auto;
+    }
+
+
+    .setting {
+        display: flex;
+        /* position: relative; */
+        align-items: center;
+        justify-content: space-around;
+        margin: 0 auto;
+
+        background-color: #ebebeb;
+
+        height: 15vh;
+        width: 100%;
+    }
+
+    .setting div:nth-child(1), .setting div:nth-child(3){
+        margin-top: -10%;
+    }
+
+    .setting div:nth-child(2) {
+        width: 8rem;
+        border-radius: 40%;
+        background-color: #fe466d;
+        
+    }
+    
+    .profile-up {
+        color: white !important;
+        font-size: 4.5rem !important;
+        padding: 3% 0 5% 0 !important;
+    }
+
+
+    .set{
+        width: 5rem;
+        height: 5rem;
+
+        border: 1px solid #4f4f4f;
+        border-radius: 50%;
+        background-color: rgb(230, 230, 230);
+
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+
+        /* position: absolute; */
+
+    }
+
+    .set:hover {
+        cursor: pointer;
+        transform: scale(1);
+    }
+
+    .set a {
+        color: #4f4f4f;
+    }
+
+   
+
+    .set p {
+        color: #d0d0d0;
+        font-size: 1em;
+    }
+
+    .fasrow {
+        font-size: 3.2rem;
+        text-decoration: none;
+        padding: 15% 0% 25% 0%;
+        margin-bottom: 1vh;
+        
+    }
+
+}
+ /*media screen */

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.dongazul.myapp.mapper.ProfileMapper">
+
+	<!--프로필생성(profile) -->
+    <insert 
+    	parameterType="com.dongazul.myapp.domain.ProfileDTO"
+    	id="insertProfile">
+    	
+       INSERT INTO profile (email, nickname, age, gender, zone, introduce, imageRoot, imgThumbImg)
+       VALUES ( #{email}, #{nickname}, #{age}, #{gender}, #{zone}, #{introduce}, #{imageRoot}, #{imgThumbImg} )
+    </insert>
+    
+    <!-- 프로필 생성(interests) -->
+    <insert
+    	parameterType="com.dongazul.myapp.domain.ProfileDTO"
+    	id="insertInterests">
+    	INSERT INTO interests ( email, hobby1, hobby2, hobby3 )
+       VALUES ( #{email}, #{hobby1}, #{hobby2}, #{hobby3} ) 
+    </insert>
+    
+    <!-- 프로필 조회 -->
+    <select id="selectProfile"
+          resultType="com.dongazul.myapp.domain.ProfileDTO">
+        SELECT
+		  *
+		FROM
+	  		profile p, 
+	  		interests i
+		WHERE
+	  		p.email = i.email
+			AND p.email = #{email}
+       </select>
+
+
+     <!-- 프로필 수정 -->
+     <update id="updateProfile">
+      UPDATE profile
+      SET
+         nickname = #{nickname},
+         age = #{age},
+         gender = #{gender},
+         zone = #{zone},
+         introduce = #{introduce},
+      	 imageRoot = #{imageRoot},
+      	 imgThumbImg = #{imgThumbImg}
+      WHERE
+         email = #{email}
+     </update>
+	
+     <!-- 프로필 수정(interests) -->	
+     <update id="updateInterest">
+      UPDATE interests
+      SET
+         hobby1 = #{hobby1},
+         hobby2 = #{hobby2},
+         hobby3 = #{hobby3}
+
+      WHERE 
+        email = #{email}
+     </update>
+     
+     
+       <!-- 상대 프로필 조회 -->
+    <select id="selectProfileWithThem"
+          resultType="com.dongazul.myapp.domain.ProfileDTO">
+        SELECT
+		  *
+		FROM
+	  		profile p, 
+	  		interests i
+		WHERE
+	  		p.email = i.email
+		</select>
+		
+		
+		
+	
+</mapper>

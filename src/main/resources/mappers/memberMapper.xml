@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.dongazul.myapp.mapper.MemberMapper">
+	<!--회원가입 -->
+    <insert 
+    	parameterType="com.dongazul.myapp.domain.MemberVO"
+    	id="insert">
+       INSERT INTO MEMBER (email, passwd, phonenumber)
+       VALUES ( #{email}, #{passwd}, #{phonenumber} )
+    </insert>
+    
+    <!--로그인-->
+    <select id="select"
+            resultType="com.dongazul.myapp.domain.MemberVO">
+            SELECT email, passwd, phonenumber
+            FROM member
+            WHERE email = #{email}
+            AND  passwd = #{passwd}
+         </select>
+         
+    <!-- 자동로그인이 Checked일 경우(자동로그인) 정보 업데이트. -->    
+    <update
+    id="updateMemberWithRememberMe">
+
+      UPDATE member
+    SET
+        rememberme = #{rememberme, jdbcType=VARCHAR},
+        rememberage = #{rememberage, jdbcType=DATE}
+    WHERE
+        email = #{email}
+
+  </update>
+
+  <!-- 자동로그인 쿠키값(=세션ID)으로 사용자를 찾기 -->
+  <select
+    id="selectMemberWithRememberMe"
+    resultType="com.dongazul.myapp.domain.MemberVO">
+
+    SELECT
+      *
+    FROM
+        member
+    WHERE
+        rememberme = #{rememberme}
+        AND rememberage > sysdate
+        
+  </select>
+    
+         
+    <!-- 회원정보수정 -->
+    <update id="memberUpdate">
+    	UPDATE member 
+    	SET
+    	passwd = #{passwd},
+    	phonenumber = #{phonenumber}
+    	WHERE email = #{email}
+    </update>
+         
+      <!-- 이메일 중복체크 -->   
+     <select id="emailCheck" resultType="int">
+     	SELECT count(*) FROM member
+     	WHERE email = #{email}
+     </select>
+     
+      <!-- 비밀번호 확인 -->   
+     <select id="passwdCheck" resultType="int">
+     	SELECT count(passwd) FROM member
+     	WHERE passwd = #{passwd}
+     </select>
+     
+       <!-- 회원 탈퇴 -->
+	 <delete id="memberDelete">
+		DELETE FROM member
+		WHERE email = #{email}
+		  AND passwd = #{passwd} 
+	</delete>
+	
+	<!-- 이메일 찾기 -->
+    <select id="findId" resultType="String">
+     	SELECT email
+     	FROM member
+     	WHERE phonenumber = #{phonenumber}
+    </select>
+     
+    <!-- 비밀번호 찾기 -->
+    <select 
+     	id="findPw"
+     	resultType="String" 
+     	>
+     	SELECT passwd
+     	FROM member
+     	WHERE email = #{email}
+     	AND phonenumber = #{phonenumber}
+    </select>
+ </mapper>

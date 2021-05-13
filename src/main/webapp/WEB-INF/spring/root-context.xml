@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+   
+   <!-- Root Context: defines shared resources visible to all other web components -->
+
+   <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+      <description>HikariCP Configuration</description>
+
+      <!-- <property name="driverClassName" value="oracle.jdbc.OracleDriver" /> -->
+      <property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
+
+      <property name="jdbcUrl" 
+		value="jdbc:log4jdbc:oracle:thin:@db202104121544_high?TNS_ADMIN=C:/opt/Wallet_DB202104121544"/>
+
+      <property name="username" value="DONGAZUL"/>
+      <property name="password" value="Oracle1234567"/>
+
+      <property name="maximumPoolSize" value="10" />
+      <property name="minimumIdle" value="2" />
+      <property name="connectionTestQuery" value="SELECT 1 FROM dual" />
+      <property name="dataSourceJNDI" value="jdbc/HikariCP" />
+      <property name="poolName" value="*** HikariDataSource ***"/>
+   </bean>
+
+   <bean
+   	id="hikariDataSource"
+	class="com.zaxxer.hikari.HikariDataSource"
+	destroy-method="close">
+
+	<description>HikariCP DataSource</description>
+
+	<constructor-arg ref="hikariConfig"/>
+   </bean>
+   
+  
+	
+   <bean 
+      id="sqlSessionFactory" 
+      class="org.mybatis.spring.SqlSessionFactoryBean">
+      <!-- 마이바티스의 설정파일의 위치를 속성으로 결정 -->
+   <property name="dataSource" ref="hikariDataSource"/>
+   <property name="configLocation" value="classpath:mybatis-config.xml"/>
+   <!-- <property name="mapperLocations"value="classpath*:mappers/**/SQL*.xml"></property> -->
+   
+   </bean>
+   
+   
+  
+   <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	<property name="host" value="smtp.gmail.com" />
+	<property name="port" value="587" />
+	<property name="username" value="dongazul010@gmail.com" />
+	<property name="password" value="ehddkwnf@13" />
+	<property name="javaMailProperties">
+		<props>
+			<prop key="mail.transport.protocol">smtp</prop>
+			<prop key="mail.smtp.auth">true</prop>
+			<prop key="mail.smtp.starttls.enable">true</prop>
+			<prop key="mail.debug">true</prop>
+			<prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+		</props>
+	</property>
+</bean>
+
+  <mybatis-spring:scan base-package="com.dongazul.myapp.mapper" />
+  
+   <!-- transaction 처리 -->
+  <context:annotation-config/>
+  <aop:aspectj-autoproxy />
+  <tx:annotation-driven />
+  
+  <context:component-scan base-package="com.dongazul.myapp.utils" />
+  
+  <bean 
+      id="transactionManager"
+      class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+      <property name="dataSource" ref="hikariDataSource"/>
+   </bean>
+</beans>
+
+
+   
+
+

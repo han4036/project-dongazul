@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.dongazul.myapp.mapper.ChatMapper">
+
+	<!--채팅방 생성 -->
+    <insert 
+    	parameterType="com.dongazul.myapp.domain.ChatDTO"
+    	id="addChatroom">
+    	
+       INSERT INTO testchatroom (email, roomname)
+       VALUES ( #{email}, #{roomname} )
+    </insert>
+    
+    <select
+    	resultType="com.dongazul.myapp.domain.ChatDTO"
+    	id="getChatroom">
+    	 SELECT /*+ index_desc(testchatroom)*/ *
+        FROM testchatroom
+    	
+    	
+    	</select>
+</mapper>
